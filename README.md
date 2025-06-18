@@ -18,19 +18,40 @@ Thsi Python program is developed using Cursor with 100% AI coding.
    pip install -r requirements.txt
    ```
 
-2. **Run the app:**
+2. **Configure environment variables:**
+   - Copy `.env.example` to `.env`
+   - Update the values in `.env` with your API keys
+
+3. **Run the app:**
    ```bash
-   python app.py
+   # Method 1: Using run.py (Recommended)
+   python run.py
+
+   # Method 2: Using Flask CLI
+   export FLASK_APP=run.py
+   export FLASK_DEBUG=1
+   flask run
    ```
 
-3. **Open in browser:**
+4. **Open in browser:**
    Visit [http://localhost:5000](http://localhost:5000)
 
 ## File Structure
-- `app.py` - Main Flask backend
-- `templates/index.html` - Responsive chat frontend
-- `static/css/style.css` - Custom CSS styles
-- `static/js/app.js` - Vue.js application logic
+- `run.py` - Application entry point
+- `app/` - Main application package
+  - `__init__.py` - App factory and initialization
+  - `config.py` - Configuration settings
+  - `routes.py` - Route definitions
+  - `services/` - Business logic
+    - `gemini_service.py` - Gemini API integration
+    - `rate_limiter.py` - Rate limiting implementation
+  - `utils/` - Utility functions
+    - `validators.py` - Input validation
+  - `static/` - Static files
+    - `css/style.css` - Custom styles
+    - `js/app.js` - Vue.js application
+- `templates/` - HTML templates
+  - `index.html` - Main page template
 - `requirements.txt` - Python dependencies
 - `.env` - Environment variables (API keys and configuration)
 - `README.md` - Project documentation
