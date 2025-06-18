@@ -1,3 +1,4 @@
 .env
 *.log
 **/*.log
+logs/chat_20250618.log
