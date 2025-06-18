@@ -39,3 +39,11 @@ Thsi Python program is developed using Cursor with 100% AI coding.
 - API keys and sensitive configuration are stored in `.env` file
 - Add `.env` to `.gitignore` to prevent committing sensitive data
 - For production, use a secure vault or environment variables management system 
+
+## .env file
+- following info are configured in the file
+GEMINI_API_URL=https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent
+GEMINI_API_KEY="GEMINI_API_KEY"
+SECRET_KEY="SECRET_KEY"
+
+- Remember to replace all above value
