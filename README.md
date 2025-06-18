@@ -1,70 +1,108 @@
-# Gemini 2.0 Flash-Lite Chatbot
+# AI PDPA Assistant
 
-A Flask-based chatbot web app using Gemini 2.0 Flash-Lite model, restricted to questions about personal data privacy and AI governance.
+A WhatsApp-like chat interface for interacting with an AI assistant specialized in Personal Data Protection Act (PDPA) and data privacy topics.
 
-Thsi Python program is developed using Cursor with 100% AI coding. 
+This Python program is developed using Cursor with 100% AI coding. 
 
 ## Features
-- Responsive web UI (Bootstrap)
-- Gemini 2.0 Flash-Lite API integration
-- Only answers questions about personal data privacy or AI governance
-- Rejects out-of-scope questions
 
+- 🤖 AI-powered responses using Google's Gemini model
+- 💬 WhatsApp-like chat interface
+- 📝 Markdown support for formatted responses
+- 🔍 Topic validation to ensure relevant discussions
+- 📚 Conversation history tracking
+- 📊 Comprehensive logging system
+
+## Project Structure
+
+```
+app/
+├── services/
+│   ├── logger_service.py    # Logging functionality
+│   └── conversation_service.py  # Conversation history management
+├── static/
+│   ├── css/
+│   │   └── style.css       # WhatsApp-like styling
+│   └── js/
+│       └── chat.js         # Chat interface functionality
+├── templates/
+│   └── index.html         # Main chat interface
+├── config.py              # Configuration settings
+└── app.py                # Main application file
+```
 
 ## Setup
 
-1. **Install dependencies:**
-   ```bash
-   pip install -r requirements.txt
-   ```
+1. Clone the repository:
+```bash
+git clone <repository-url>
+cd AI_PDPA
+```
 
-2. **Configure environment variables:**
-   - Copy `.env.example` to `.env`
-   - Update the values in `.env` with your API keys
+2. Create and activate a virtual environment:
+```bash
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+```
 
-3. **Run the app:**
-   ```bash
-   # Method 1: Using run.py (Recommended)
-   python run.py
+3. Install dependencies:
+```bash
+pip install -r requirements.txt
+```
 
-   # Method 2: Using Flask CLI
-   export FLASK_APP=run.py
-   export FLASK_DEBUG=1
-   flask run
-   ```
+4. Copy `.env.example` to `.env`
+   - Update the values in `.env` with your keys
 
-4. **Open in browser:**
-   Visit [http://localhost:5000](http://localhost:5000)
+5. Run the application:
+```bash
+python app/app.py
+```
 
-## File Structure
-- `run.py` - Application entry point
-- `app/` - Main application package
-  - `__init__.py` - App factory and initialization
-  - `config.py` - Configuration settings
-  - `routes.py` - Route definitions
-  - `services/` - Business logic
-    - `gemini_service.py` - Gemini API integration
-    - `rate_limiter.py` - Rate limiting implementation
-  - `utils/` - Utility functions
-    - `validators.py` - Input validation
-  - `static/` - Static files
-    - `css/style.css` - Custom styles
-    - `js/app.js` - Vue.js application
-- `templates/` - HTML templates
-  - `index.html` - Main page template
-- `requirements.txt` - Python dependencies
-- `.env` - Environment variables (API keys and configuration)
-- `README.md` - Project documentation
+## Configuration
 
-## Security Note
-- API keys and sensitive configuration are stored in `.env` file
-- Add `.env` to `.gitignore` to prevent committing sensitive data
-- For production, use a secure vault or environment variables management system 
+The application can be configured through `config.py`:
 
-## .env file
-- following info are configured in the file
-GEMINI_API_URL=https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent
-GEMINI_API_KEY="GEMINI_API_KEY"
-SECRET_KEY="SECRET_KEY"
+- `ALLOWED_KEYWORDS`: List of keywords for topic validation
+- `WELCOME_MESSAGE`: Initial greeting message
+- `IRRELEVANT_RESPONSE`: Message for off-topic questions
+- `GEMINI_CONFIG`: AI model configuration settings
 
-- Remember to replace all above value
+## Features in Detail
+
+### Topic Validation
+The assistant only responds to questions related to:
+- Personal Data Protection Act (PDPA)
+- Data privacy regulations
+- Data protection best practices
+- Compliance requirements
+- Data subject rights
+
+### Conversation History
+- Maintains context of the last question and response
+- Improves response relevance and continuity
+- Helps in maintaining conversation flow
+
+### Logging
+- Comprehensive logging of user messages and AI responses
+- Error tracking and debugging support
+- Separate logging service for better organization
+
+### UI Features
+- WhatsApp-like interface
+- Markdown support for formatted responses
+- Responsive design
+- Maximizable chat window
+- Loading indicators
+- Error handling
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Commit your changes
+4. Push to the branch
+5. Create a Pull Request
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
