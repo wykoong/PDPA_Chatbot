@@ -1,0 +1,5 @@
+Flask==3.0.3
+requests==2.31.0
+flask-cors==4.0.0
+markdown2==2.4.10
+flask-debugtoolbar==0.13.1 
