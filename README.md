@@ -29,7 +29,13 @@ Thsi Python program is developed using Cursor with 100% AI coding.
 ## File Structure
 - `app.py` - Main Flask backend
 - `templates/index.html` - Responsive chat frontend
+- `static/css/style.css` - Custom CSS styles
+- `static/js/app.js` - Vue.js application logic
 - `requirements.txt` - Python dependencies
+- `.env` - Environment variables (API keys and configuration)
+- `README.md` - Project documentation
 
 ## Security Note
-- The Gemini API key is hardcoded for demo purposes. For production, use environment variables or a secure vault. 
+- API keys and sensitive configuration are stored in `.env` file
+- Add `.env` to `.gitignore` to prevent committing sensitive data
+- For production, use a secure vault or environment variables management system 
