@@ -1,8 +1,12 @@
-Flask==2.0.1
-Werkzeug==2.0.3
-requests==2.31.0
-flask-cors==4.0.0
-markdown2==2.4.10
-flask-debugtoolbar==0.13.1
-python-dotenv==0.19.0
-google-generativeai==0.3.2 
+Flask>=2.0.1
+Werkzeug>=2.0.3
+requests>=2.31.0
+flask-cors>=4.0.0
+markdown2>=2.4.10
+flask-debugtoolbar>=0.13.1
+python-dotenv>=0.19.0
+google-generativeai>=0.3.2
+langchain>=0.0.200
+langchain_community>=0.0.20
+openai>=1.0.0
+# google-auth      # Uncomment if not installed by google-generativeai 

@@ -11,19 +11,12 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Function to add a message to the chat
-    function addMessage(content, isUser = false) {
+    function addMessage(message, isUser = false) {
         const messageDiv = document.createElement('div');
-        messageDiv.className = `message ${isUser ? 'user-message' : 'bot-message'}`;
-        
-        const messageContent = document.createElement('div');
-        messageContent.className = 'message-content';
-        messageContent.innerHTML = content;
-        
-        messageDiv.appendChild(messageContent);
+        messageDiv.className = isUser ? 'message user-message' : 'message bot-message';
+        messageDiv.innerHTML = `<div class="message-content">${message}</div>`;
         chatMessages.appendChild(messageDiv);
-        
-        // Scroll to bottom with a slight delay to ensure content is rendered
-        setTimeout(scrollToBottom, 100);
+        scrollToBottom();
     }
 
     // Show welcome message when page loads
@@ -46,6 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
         e.preventDefault();
         
         const message = messageInput.value.trim();
+        const provider = document.getElementById('llm-model').value;
         if (!message) return;
 
         // Add user message
@@ -62,12 +56,15 @@ document.addEventListener('DOMContentLoaded', function() {
         scrollToBottom();
         
         try {
-            const response = await fetch('/chat', {
+            const response = await fetch('/langchain', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ message: message })
+                body: JSON.stringify({
+                    prompt: message,
+                    provider: provider
+                })
             });
             
             const data = await response.json();
@@ -75,8 +72,12 @@ document.addEventListener('DOMContentLoaded', function() {
             // Remove loading indicator
             chatMessages.removeChild(loadingDiv);
             
-            // Add bot response
-            addMessage(data.response);
+            if (response.ok) {
+                // Add bot response
+                addMessage(data.response);
+            } else {
+                alert(data.error || "Sorry, there was an error processing your request.");
+            }
             
         } catch (error) {
             console.error('Error:', error);

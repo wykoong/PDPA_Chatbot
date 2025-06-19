@@ -17,3 +17,6 @@ def is_in_scope(question: str) -> bool:
     """
     q = question.lower()
     return any(keyword.lower() in q for keyword in ALLOWED_KEYWORDS)
+
+
+

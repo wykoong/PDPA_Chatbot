@@ -6,29 +6,38 @@ This Python program is developed using Cursor with 100% AI coding.
 
 ## Features
 
-- 🤖 AI-powered responses using Google's Gemini model
+- 🤖 AI-powered responses using Google's Gemini, OpenAI, or LangChain models
 - 💬 WhatsApp-like chat interface
 - 📝 Markdown support for formatted responses
 - 🔍 Topic validation to ensure relevant discussions
-- 📚 Conversation history tracking
+- 📚 Conversation history tracking (with context-aware prompt formatting)
 - 📊 Comprehensive logging system
+- 🔄 Easily switch between AI providers via configuration
+- 🧠 Automatic prompt length management to comply with model token limits
 
 ## Project Structure
 
 ```
 app/
 ├── services/
-│   ├── logger_service.py    # Logging functionality
-│   └── conversation_service.py  # Conversation history management
+│   ├── logger_service.py         # Logging functionality
+│   ├── conversation_service.py   # Conversation history management and context formatting
+│   ├── gemini_service.py         # Gemini AI integration (with history and prompt length logic)
+│   ├── openai_service.py         # OpenAI integration
+│   └── langchain_service.py      # LangChain integration
+├── utils/
+│   ├── utils.py                  # Utility functions
+│   └── validators.py             # Input validation
 ├── static/
 │   ├── css/
-│   │   └── style.css       # WhatsApp-like styling
+│   │   └── style.css             # WhatsApp-like styling
 │   └── js/
-│       └── chat.js         # Chat interface functionality
+│       └── chat.js               # Chat interface functionality
 ├── templates/
-│   └── index.html         # Main chat interface
-├── config.py              # Configuration settings
-└── app.py                # Main application file
+│   └── index.html                # Main chat interface
+├── config.py                     # Configuration settings
+├── __main__.py                   # Module entry point
+└── app.py                        # Main application file
 ```
 
 ## Setup
@@ -51,23 +60,29 @@ pip install -r requirements.txt
 ```
 
 4. Copy `.env.example` to `.env`
-   - Update the values in `.env` with your keys
+   - Update the values in `.env` with your API keys for Gemini, OpenAI, and Flask as needed
 
 5. Run the application:
 ```bash
-python app/app.py
+python -m app
 ```
 
 ## Configuration
 
-The application can be configured through `config.py`:
+The application can be configured through `config.py` and environment variables:
 
 - `ALLOWED_KEYWORDS`: List of keywords for topic validation
 - `WELCOME_MESSAGE`: Initial greeting message
 - `IRRELEVANT_RESPONSE`: Message for off-topic questions
-- `GEMINI_CONFIG`: AI model configuration settings
+- `GEMINI_CONFIG`: Gemini model configuration settings
+- `OPENAI_API_KEY`, `OPENAI_API_MODEL`: OpenAI API credentials and model
+- `MAX_OUTPUT_TOKENS`: Maximum output tokens for AI responses (used for prompt length management)
 
 ## Features in Detail
+
+### Multi-Provider AI Support
+- Easily switch between Gemini, and OpenAI by changing the configuration.
+- Each provider has its own service class for clean separation and maintainability.
 
 ### Topic Validation
 The assistant only responds to questions related to:
@@ -77,10 +92,13 @@ The assistant only responds to questions related to:
 - Compliance requirements
 - Data subject rights
 
-### Conversation History
-- Maintains context of the last question and response
-- Improves response relevance and continuity
-- Helps in maintaining conversation flow
+### Conversation History & Context-Aware Prompts
+- Maintains context of the last question and response.
+- When generating a response, the assistant includes the previous question and answer in the prompt for better context.
+- If the combined prompt (including history) exceeds half of `MAX_OUTPUT_TOKENS`, only the current question is sent to ensure compliance with model limits.
+
+### Prompt Length Management
+- The system automatically checks and trims the prompt to avoid exceeding model token limits, ensuring reliable operation.
 
 ### Logging
 - Comprehensive logging of user messages and AI responses
@@ -94,6 +112,11 @@ The assistant only responds to questions related to:
 - Maximizable chat window
 - Loading indicators
 - Error handling
+
+## Development Notes
+
+- Do **not** commit `__pycache__` directories or `.pyc` files. Add them to your `.gitignore` if not already present.
+- Each service is modular and can be extended or replaced as needed.
 
 ## Contributing
 

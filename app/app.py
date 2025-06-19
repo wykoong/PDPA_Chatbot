@@ -2,10 +2,11 @@ from flask import Flask, render_template, request, jsonify
 import os
 import google.generativeai as genai
 from dotenv import load_dotenv
-from services.logger_service import chat_logger
-from services.conversation_service import conversation_service
+from app.services.logger_service import chat_logger
+from app.services.conversation_service import conversation_service
 import markdown2
-from config import ALLOWED_KEYWORDS, WELCOME_MESSAGE, GEMINI_CONFIG, IRRELEVANT_RESPONSE
+from app.config import ALLOWED_KEYWORDS, WELCOME_MESSAGE, GEMINI_CONFIG, IRRELEVANT_RESPONSE
+import app.routes  # This ensures routes are registered
 
 # Load environment variables
 load_dotenv()
@@ -29,8 +30,28 @@ generation_config = genai.types.GenerationConfig(
 
 app = Flask(__name__)
 
-def is_relevant_question(message):
-    """Check if the question is related to PDPA and data privacy topics."""
+def create_app() -> Flask:
+    """
+    Create and configure the Flask application.
+
+    Returns:
+        Flask: The configured Flask app.
+    """
+    app = Flask(__name__)
+    # ... config ...
+    # If using blueprints, register them here
+    return app
+
+def is_relevant_question(message: str) -> bool:
+    """
+    Check if the question is related to PDPA and data privacy topics.
+
+    Args:
+        message (str): The user's message.
+
+    Returns:
+        bool: True if relevant, False otherwise.
+    """
     message_lower = message.lower()
     return any(keyword.lower() in message_lower for keyword in ALLOWED_KEYWORDS)
 
@@ -78,7 +99,7 @@ def chat():
     except Exception as e:
         error_message = f"Error generating response: {str(e)}"
         print(error_message)
-        chat_logger.log_error(error_message)
+        chat_logger.log_exception(f"App-level error: {e}")
         formatted_response = "I apologize, but I encountered an error while processing your request. Please try again."
     
     return jsonify({'response': formatted_response})
