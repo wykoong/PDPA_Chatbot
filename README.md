@@ -4,6 +4,8 @@ A WhatsApp-like chat interface for interacting with an AI assistant specialized 
 
 This Python program is developed using Cursor with 100% AI coding. 
 
+An enhanced version with LangChain and OpenAI support is available under LangChain branch.
+
 ## Features
 
 - 🤖 AI-powered responses using Google's Gemini model
